@@ -1,0 +1,86 @@
+import java.util.Scanner;
+
+class BankAccount {
+    protected String accountNumber;
+    protected String accountHolderName;
+    protected double balance;
+
+    Scanner scanner = new Scanner(System.in)
+    public void openAccount() {
+        System.out.print("Enter Account Number: ");
+        accountNumber = scanner.nextLine();
+
+        System.out.print("Enter Account Holder Name: ");
+        accountHolderName = scanner.nextLine();
+
+        System.out.print("Enter Initial Deposit: ");
+        balance = scanner.nextDouble();
+        scanner.nextLine();
+    }
+
+    public void deposit() {
+        System.out.print("Enter deposit amount: ");
+        double amount = scanner.nextDouble();
+        balance += amount;
+        System.out.println("Amount deposited successfully.");
+    }
+
+    public void withdraw() {
+        System.out.print("Enter withdrawal amount: ");
+        double amount = scanner.nextDouble();
+
+        if (amount <= balance) {
+            balance -= amount;
+            System.out.println("Withdrawal successful.");
+        } else {
+            System.out.println("Insufficient balance.");
+        }
+    }
+
+    public void checkBalance() {
+        System.out.println("Current Balance: " + balance);
+    }
+}
+
+class SavingAccount extends BankAccount {
+    double interestRate = 0.04; // 4% interest
+
+    public void calculateInterest() {
+        double interest = balance * interestRate;
+        System.out.println("Savings Interest: " + interest);
+    }
+}
+
+class FixedDepositAccount extends BankAccount {
+    double interestRate = 0.07; // 7% interest
+    int years;
+
+    public void setFDDetails() {
+        System.out.print("Enter FD duration (years): ");
+        years = scanner.nextInt();
+    }
+
+    public void maturityAmount() {
+        double maturity = balance + (balance * interestRate * years);
+        System.out.println("Maturity Amount after " + years + " years: " + maturity);
+    }
+}
+
+public class BankSystemDemo {
+    public static void main(String[] args) {
+
+        System.out.println("=== Savings Account ===");
+        SavingAccount sa = new SavingAccount();
+        sa.openAccount();
+        sa.deposit();
+        sa.checkBalance();
+        sa.calculateInterest();
+
+        System.out.println("\n=== Fixed Deposit Account ===");
+        FixedDepositAccount fd = new FixedDepositAccount();
+        fd.openAccount();
+        fd.setFDDetails();
+        fd.checkBalance();
+        fd.maturityAmount();
+    }
+}
