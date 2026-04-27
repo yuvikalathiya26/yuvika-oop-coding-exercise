@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+interface Classify {
+    String getDivision(double average);
+}
+
+class Result implements Classify {
+
+    public String getDivision(double average) {
+        if (average >= 60) {
+            return "First Division";
+        } else {
+            return "Other Division";
+        }
+    }
+}
+
+public class ClassifyDemo {
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter average marks: ");
+        double average = scanner.nextDouble();
+
+        Result result = new Result();
+
+        String division = result.getDivision(average);
+        System.out.println("Result: " + division);
+
+        scanner.close();
+    }
+}
