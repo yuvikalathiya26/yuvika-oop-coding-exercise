@@ -1,0 +1,46 @@
+import java.util.Scanner;
+
+class BookNotAvailableException extends Exception {
+    public BookNotAvailableException(String message) {
+        super(message);
+    }
+}
+
+class Library {
+    private int availableBooks;
+
+    public Library(int availableBooks) {
+        this.availableBooks = availableBooks;
+    }
+
+    public void issueBook(int count) throws BookNotAvailableException {
+        if (count <= availableBooks) {
+            availableBooks -= count;
+            System.out.println("Book issued successfully");
+            System.out.println("Books remaining: " + availableBooks);
+        } else {
+            throw new BookNotAvailableException("Requested books not available");
+        }
+    }
+}
+
+public class LibraryDemo {
+    public static void main(String[] args) {
+
+        Library library = new Library(3);
+
+        try {
+            System.out.println("Issuing 2 books...");
+            library.issueBook(2);
+
+            System.out.println("\nIssuing 2 more books...");
+            library.issueBook(2);
+
+        }
+        catch (BookNotAvailableException e) {
+            System.out.println("Exception: " + e.getMessage());
+        }
+
+        System.out.println("\nProgram execution completed.");
+    }
+}
